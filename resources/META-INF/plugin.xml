@@ -1,0 +1,31 @@
+<idea-plugin>
+  <id>com.your.company.unique.plugin.id</id>
+  <name>IJVM - Language</name>
+  <version>1.0</version>
+  <vendor email="Frederik1904@gmail.com" url="http://bamboozle.academy">bamboozle</vendor>
+
+  <!--suppress PluginXmlValidity -->
+  <description>This is a plugin for the language IJVM</description>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+    <fileTypeFactory implementation="com.IJVM.IJVMFileTypeFactory"/>
+    <lang.parserDefinition language="IJVM" implementationClass="com.IJVMplugin.IJVMParserDefinition"/>
+    <lang.syntaxHighlighterFactory language="IJVM" implementationClass="com.IJVMplugin.IJVMSyntaxHighlighterFactory"/>
+    <completion.contributor language="IJVM" implementationClass="com.IJVMplugin.IJVMCompletionContributor"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>

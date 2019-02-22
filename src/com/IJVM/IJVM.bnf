@@ -1,0 +1,31 @@
+{
+    parserClass="com.IJVMplugin.parser.IJVMParser"
+
+    extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+    psiClassPrefix="IJVM"
+    psiImplClassSuffix="Impl"
+    psiPackage="com.IJVMplugin.psi"
+    psiImplPackage="com.IJVMplugin.psi.impl"
+
+    elementTypeHolderClass="com.IJVMplugin.psi.IJVMTypes"
+    elementTypeClass="com.IJVMplugin.psi.IJVMElementType"
+    tokenTypeClass="com.IJVMplugin.psi.IJVMTokenType"
+}
+
+IJVMFile ::= item_*
+
+Instruction ::= (Idenfifier ';'| Idenfifier ';' SimpleInstr | SimpleInstr)
+
+SimpleInstr ::= ( "ILOAD" Idenfifier
+                | "ISTORE" Idenfifier
+                | "IADD"
+                | "ISUB"
+                | "IAND"
+                | "IOR"
+                | )
+
+private item_ ::= (property|COMMENT|CRLF)
+
+property ::= (KEY? SEPARATOR VALUE?) | KEY
+
