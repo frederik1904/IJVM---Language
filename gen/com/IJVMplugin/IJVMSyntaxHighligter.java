@@ -17,6 +17,8 @@ public class IJVMSyntaxHighligter extends SyntaxHighlighterBase {
             TextAttributesKey.createTextAttributesKey("IJVM_SEPARATOR", DefaultLanguageHighlighterColors.OPERATION_SIGN);
     public static final TextAttributesKey KEY =
             TextAttributesKey.createTextAttributesKey("IJVM_KEY", DefaultLanguageHighlighterColors.KEYWORD);
+    public static final TextAttributesKey LETTER =
+            TextAttributesKey.createTextAttributesKey("IJVM_LETTER", DefaultLanguageHighlighterColors.CONSTANT);
     public static final TextAttributesKey VALUE =
             TextAttributesKey.createTextAttributesKey("IJVM_VALUE", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey COMMENT =
@@ -27,6 +29,7 @@ public class IJVMSyntaxHighligter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] BAD_CHAR_KEYS = new TextAttributesKey[]{BAD_CHARACTER};
     private static final TextAttributesKey[] SEPARATOR_KEYS = new TextAttributesKey[]{SEPARATOR};
     private static final TextAttributesKey[] KEY_KEYS = new TextAttributesKey[]{KEY};
+    private static final TextAttributesKey[] LETTER_KEYS = new TextAttributesKey[]{LETTER};
     private static final TextAttributesKey[] VALUE_KEYS = new TextAttributesKey[]{VALUE};
     private static final TextAttributesKey[] COMMENT_KEYS = new TextAttributesKey[]{COMMENT};
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
@@ -50,6 +53,8 @@ public class IJVMSyntaxHighligter extends SyntaxHighlighterBase {
             return COMMENT_KEYS;
         } else if (tokenType.equals(TokenType.BAD_CHARACTER)) {
             return BAD_CHAR_KEYS;
+        } else if (tokenType.equals(IJVMTypes.LETTER)) {
+            return LETTER_KEYS;
         } else {
             return EMPTY_KEYS;
         }

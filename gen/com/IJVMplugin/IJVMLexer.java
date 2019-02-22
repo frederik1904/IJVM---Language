@@ -24,10 +24,11 @@ class IJVMLexer implements FlexLexer {
   /** lexical states */
   public static final int YYINITIAL = 0;
   public static final int WAITING_VALUE = 2;
-  public static final int SPACE_VALUE = 4;
-  public static final int VALUE_VALUE = 6;
-  public static final int SEPARATOR_VALUE = 8;
-  public static final int INTEGER_VALUE = 10;
+  public static final int VALUE = 4;
+  public static final int INTEGER_VALUE = 6;
+  public static final int SEPARATOR = 8;
+  public static final int LETTER_VALUE = 10;
+  public static final int LETTER_ONLY_VALUE = 12;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -36,34 +37,32 @@ class IJVMLexer implements FlexLexer {
    * l is of the form l = 2*k, k a non negative integer
    */
   private static final int ZZ_LEXSTATE[] = { 
-     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5, 5
+     0,  0,  1,  1,  2,  2,  3,  3,  4,  4,  5,  5,  6, 6
   };
 
   /** 
    * Translates characters to character classes
-   * Chosen bits are [7, 7, 7]
-   * Total runtime size is 1928 bytes
+   * Chosen bits are [9, 6, 6]
+   * Total runtime size is 1568 bytes
    */
   public static int ZZ_CMAP(int ch) {
-    return ZZ_CMAP_A[(ZZ_CMAP_Y[ZZ_CMAP_Z[ch>>14]|((ch>>7)&0x7f)]<<7)|(ch&0x7f)];
+    return ZZ_CMAP_A[(ZZ_CMAP_Y[ZZ_CMAP_Z[ch>>12]|((ch>>6)&0x3f)]<<6)|(ch&0x3f)];
   }
 
-  /* The ZZ_CMAP_Z table has 68 entries */
+  /* The ZZ_CMAP_Z table has 272 entries */
   static final char ZZ_CMAP_Z[] = zzUnpackCMap(
-    "\1\0\103\200");
+    "\1\0\1\100\1\200\u010d\100");
 
-  /* The ZZ_CMAP_Y table has 256 entries */
+  /* The ZZ_CMAP_Y table has 192 entries */
   static final char ZZ_CMAP_Y[] = zzUnpackCMap(
-    "\1\0\1\1\53\2\1\3\22\2\1\4\37\2\1\3\237\2");
+    "\1\0\1\1\1\2\175\3\1\4\77\3");
 
-  /* The ZZ_CMAP_A table has 640 entries */
+  /* The ZZ_CMAP_A table has 320 entries */
   static final char ZZ_CMAP_A[] = zzUnpackCMap(
-    "\11\0\1\4\1\2\1\1\1\5\1\3\22\0\1\7\3\0\1\13\6\0\1\13\2\0\1\43\1\11\12\13\3"+
-    "\0\1\12\3\0\1\20\1\27\1\36\1\14\1\24\1\32\1\31\1\40\1\17\1\0\1\42\1\34\1\37"+
-    "\1\21\1\22\1\16\1\33\1\23\1\26\1\25\1\15\1\41\1\30\4\0\1\6\2\0\1\35\1\0\1"+
-    "\44\1\0\1\52\1\53\1\54\1\55\1\46\1\0\1\56\2\0\1\50\1\0\1\57\1\51\2\0\1\45"+
-    "\1\47\21\0\1\1\32\0\1\10\337\0\1\10\177\0\13\10\35\0\2\1\5\0\1\10\57\0\1\10"+
-    "\40\0");
+    "\11\0\1\4\1\2\1\1\1\5\1\3\22\0\1\6\14\0\1\41\1\32\1\7\12\42\3\0\1\10\3\0\1"+
+    "\15\1\24\1\27\1\11\1\21\1\34\1\33\1\26\1\14\1\41\1\40\1\30\1\36\1\16\1\17"+
+    "\1\13\1\35\1\20\1\23\1\22\1\12\1\37\1\25\3\41\4\0\1\31\1\0\32\41\12\0\1\1"+
+    "\242\0\2\1\26\0");
 
   /** 
    * Translates DFA states to action switch labels.
@@ -71,12 +70,12 @@ class IJVMLexer implements FlexLexer {
   private static final int [] ZZ_ACTION = zzUnpackAction();
 
   private static final String ZZ_ACTION_PACKED_0 =
-    "\6\0\1\1\1\2\12\1\2\3\2\4\1\1\1\4"+
-    "\1\3\2\5\2\6\1\7\21\0\2\3\1\10\21\0"+
-    "\1\11\27\0\1\12\5\0";
+    "\7\0\1\1\1\2\12\1\2\3\1\4\1\2\1\5"+
+    "\1\4\1\6\23\0\1\7\22\0\1\10\15\0\1\11"+
+    "\3\0\1\12\15\0\1\13\4\0";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[97];
+    int [] result = new int[101];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -101,22 +100,22 @@ class IJVMLexer implements FlexLexer {
   private static final int [] ZZ_ROWMAP = zzUnpackRowMap();
 
   private static final String ZZ_ROWMAP_PACKED_0 =
-    "\0\0\0\60\0\140\0\220\0\300\0\360\0\u0120\0\u0150"+
-    "\0\u0180\0\u01b0\0\u01e0\0\u0210\0\u0240\0\u0270\0\u02a0\0\u02d0"+
-    "\0\u0300\0\u0330\0\u0360\0\u0390\0\u0150\0\u03c0\0\u03f0\0\u0420"+
-    "\0\u0450\0\u0150\0\u0120\0\u0120\0\u0150\0\u0480\0\u04b0\0\u04e0"+
-    "\0\u0510\0\u0540\0\u0570\0\u05a0\0\u05d0\0\u0600\0\u0630\0\u0660"+
-    "\0\u0690\0\u06c0\0\u06f0\0\u0720\0\u0750\0\u0780\0\u07b0\0\u07e0"+
-    "\0\u0810\0\u0120\0\u0840\0\u0870\0\u08a0\0\u08d0\0\u0900\0\u0930"+
-    "\0\u0960\0\u0990\0\u09c0\0\u09f0\0\u0a20\0\u0a50\0\u0a80\0\u0ab0"+
-    "\0\u0ae0\0\u0b10\0\u0b40\0\u0120\0\u0b70\0\u0ba0\0\u0bd0\0\u0c00"+
-    "\0\u0c30\0\u0c60\0\u0c90\0\u0cc0\0\u0cf0\0\u0d20\0\u0d50\0\u0d80"+
-    "\0\u0db0\0\u0de0\0\u0e10\0\u0e40\0\u0e70\0\u0ea0\0\u0ed0\0\u0f00"+
-    "\0\u0f30\0\u0f60\0\u0f90\0\u0120\0\u0fc0\0\u0ff0\0\u1020\0\u1050"+
-    "\0\u1080";
+    "\0\0\0\43\0\106\0\151\0\214\0\257\0\322\0\365"+
+    "\0\u0118\0\u013b\0\u015e\0\u0181\0\u01a4\0\u01c7\0\u01ea\0\u020d"+
+    "\0\u0230\0\u0253\0\u0276\0\u0118\0\u0299\0\u02bc\0\u02df\0\u0302"+
+    "\0\u0325\0\u0348\0\u036b\0\u038e\0\u03b1\0\u03d4\0\u03f7\0\u041a"+
+    "\0\u043d\0\u0460\0\u0483\0\u04a6\0\u04c9\0\u04ec\0\u050f\0\u0532"+
+    "\0\u0555\0\u0578\0\u059b\0\u05be\0\u05e1\0\365\0\u0604\0\u0627"+
+    "\0\u064a\0\u066d\0\u0690\0\u06b3\0\u06d6\0\u06f9\0\u071c\0\u073f"+
+    "\0\u0762\0\u0785\0\u07a8\0\u07cb\0\u07ee\0\u0811\0\u0834\0\u0857"+
+    "\0\365\0\u087a\0\u089d\0\u08c0\0\u08e3\0\u0906\0\u0929\0\u094c"+
+    "\0\u096f\0\u0992\0\u09b5\0\u09d8\0\u09fb\0\u0a1e\0\365\0\u0a41"+
+    "\0\u0a64\0\u0a87\0\365\0\u0aaa\0\u0acd\0\u0af0\0\u0b13\0\u0b36"+
+    "\0\u0b59\0\u0b7c\0\u0b9f\0\u0bc2\0\u0be5\0\u0c08\0\u0c2b\0\u0c4e"+
+    "\0\365\0\u0c71\0\u0c94\0\u0cb7\0\u0cda";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[97];
+    int [] result = new int[101];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -139,45 +138,42 @@ class IJVMLexer implements FlexLexer {
   private static final int [] ZZ_TRANS = zzUnpackTrans();
 
   private static final String ZZ_TRANS_PACKED_0 =
-    "\1\7\5\10\1\7\1\10\1\7\1\11\2\7\1\12"+
-    "\1\7\1\13\1\14\1\7\1\13\4\7\1\15\1\16"+
-    "\1\17\1\20\2\7\1\21\6\7\1\22\14\7\1\23"+
-    "\1\24\1\25\1\24\1\26\1\25\1\27\1\30\1\23"+
-    "\1\31\46\23\1\7\5\10\1\7\1\32\50\7\1\23"+
-    "\5\10\1\23\1\10\1\7\47\23\1\7\5\10\1\7"+
-    "\1\32\2\7\1\33\45\7\1\34\5\35\1\34\1\35"+
-    "\3\34\1\7\44\34\61\0\5\10\1\0\1\10\61\0"+
-    "\1\36\63\0\1\37\64\0\1\37\54\0\1\40\1\41"+
-    "\1\42\1\43\1\44\2\0\1\45\3\0\1\46\1\0"+
-    "\1\47\53\0\1\50\46\0\1\51\57\0\1\52\62\0"+
-    "\1\53\51\0\1\54\107\0\1\55\3\0\1\56\2\0"+
-    "\1\57\4\0\1\23\5\0\1\23\2\0\50\23\5\10"+
-    "\1\23\1\10\1\0\50\23\1\10\1\30\1\10\2\30"+
-    "\1\23\1\30\1\0\52\23\1\60\54\23\1\0\1\10"+
-    "\1\30\1\10\2\30\1\0\1\30\50\0\1\23\5\0"+
-    "\1\23\2\0\1\61\46\23\2\36\2\0\54\36\16\0"+
-    "\1\62\62\0\1\63\52\0\1\64\4\0\1\64\77\0"+
-    "\1\65\41\0\1\62\60\0\1\66\50\0\1\67\7\0"+
-    "\1\70\56\0\1\71\7\0\1\72\1\73\44\0\1\74"+
-    "\55\0\1\37\55\0\1\75\55\0\1\76\70\0\1\77"+
-    "\70\0\1\100\66\0\1\101\63\0\1\102\62\0\1\103"+
-    "\3\0\1\23\1\0\1\23\3\0\1\23\2\0\47\23"+
-    "\1\61\1\36\2\0\2\36\1\61\2\36\47\61\36\0"+
-    "\1\104\35\0\1\62\65\0\1\105\62\0\1\106\61\0"+
-    "\1\62\52\0\1\107\70\0\1\104\51\0\1\104\51\0"+
-    "\1\110\60\0\1\111\54\0\1\112\66\0\1\62\55\0"+
-    "\1\104\72\0\1\113\70\0\1\114\63\0\1\115\62\0"+
-    "\1\116\44\0\1\117\32\0\1\120\65\0\1\121\72\0"+
-    "\1\122\35\0\1\104\71\0\1\123\61\0\1\104\76\0"+
-    "\1\104\54\0\1\124\71\0\1\125\25\0\1\126\56\0"+
-    "\1\127\60\0\1\104\72\0\1\130\60\0\1\104\67\0"+
-    "\1\114\66\0\1\131\41\0\1\132\37\0\1\62\54\0"+
-    "\1\133\115\0\1\134\22\0\1\135\64\0\1\71\56\0"+
-    "\1\136\61\0\1\137\47\0\1\140\62\0\1\141\73\0"+
-    "\1\104\23\0";
+    "\1\10\6\11\1\12\1\10\1\13\1\10\1\14\1\15"+
+    "\1\10\1\14\4\10\1\16\1\17\1\20\2\10\1\21"+
+    "\1\10\1\22\1\23\10\10\1\11\1\24\1\11\1\25"+
+    "\1\24\1\25\1\12\34\10\6\11\35\10\6\11\33\10"+
+    "\1\26\1\10\5\11\1\27\35\10\6\11\2\10\21\30"+
+    "\1\10\7\30\2\10\6\11\2\10\21\31\1\10\7\31"+
+    "\1\10\44\0\6\11\43\0\1\32\45\0\1\33\47\0"+
+    "\1\33\37\0\1\34\1\35\1\36\1\37\1\40\2\0"+
+    "\1\41\4\0\1\42\3\0\1\43\33\0\1\44\31\0"+
+    "\1\45\42\0\1\46\37\0\1\47\42\0\1\50\3\0"+
+    "\1\51\12\0\1\52\5\0\1\53\23\0\1\54\24\0"+
+    "\1\11\1\25\1\11\3\25\76\0\1\26\1\0\6\11"+
+    "\1\0\1\55\43\0\21\30\1\0\7\30\12\0\21\31"+
+    "\1\0\7\31\1\0\2\32\2\0\37\32\13\0\1\56"+
+    "\45\0\1\57\35\0\1\60\4\0\1\60\63\0\1\61"+
+    "\23\0\1\56\43\0\1\62\33\0\1\63\7\0\1\64"+
+    "\37\0\1\65\44\0\1\66\6\0\1\67\1\70\26\0"+
+    "\1\33\40\0\1\71\40\0\1\72\60\0\1\73\34\0"+
+    "\1\74\41\0\1\75\41\0\1\76\44\0\1\77\43\0"+
+    "\1\100\26\0\1\101\63\0\1\102\24\0\1\56\50\0"+
+    "\1\103\45\0\1\104\44\0\1\56\35\0\1\105\40\0"+
+    "\1\106\62\0\1\107\27\0\1\107\34\0\1\110\40\0"+
+    "\1\111\51\0\1\56\52\0\1\112\45\0\1\113\41\0"+
+    "\1\114\36\0\1\115\35\0\1\116\37\0\1\107\31\0"+
+    "\1\117\74\0\1\120\14\0\1\121\50\0\1\122\33\0"+
+    "\1\107\37\0\1\123\63\0\1\124\36\0\1\125\44\0"+
+    "\1\102\31\0\1\126\51\0\1\102\34\0\1\127\53\0"+
+    "\1\130\35\0\1\131\41\0\1\132\43\0\1\107\57\0"+
+    "\1\133\32\0\1\102\32\0\1\134\54\0\1\114\31\0"+
+    "\1\106\62\0\1\135\21\0\1\56\37\0\1\136\50\0"+
+    "\1\137\35\0\1\140\47\0\1\66\27\0\1\141\54\0"+
+    "\1\142\44\0\1\143\32\0\1\144\45\0\1\145\55\0"+
+    "\1\107\12\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[4272];
+    int [] result = new int[3325];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -215,11 +211,11 @@ class IJVMLexer implements FlexLexer {
   private static final int [] ZZ_ATTRIBUTE = zzUnpackAttribute();
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
-    "\6\0\1\11\23\1\2\11\2\1\21\0\2\1\1\11"+
-    "\21\0\1\11\27\0\1\11\5\0";
+    "\7\0\1\11\22\1\23\0\1\11\22\0\1\11\15\0"+
+    "\1\11\3\0\1\11\15\0\1\11\4\0";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[97];
+    int [] result = new int[101];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -536,52 +532,57 @@ class IJVMLexer implements FlexLexer {
             { return TokenType.BAD_CHARACTER;
             } 
             // fall through
-          case 11: break;
+          case 12: break;
           case 2: 
             { yybegin(YYINITIAL); return TokenType.WHITE_SPACE;
             } 
             // fall through
-          case 12: break;
-          case 3: 
-            { yybegin(YYINITIAL); return IJVMTypes.VALUE;
-            } 
-            // fall through
           case 13: break;
-          case 4: 
+          case 3: 
             { yybegin(WAITING_VALUE); return TokenType.WHITE_SPACE;
             } 
             // fall through
           case 14: break;
-          case 5: 
-            { yybegin(VALUE_VALUE); return IJVMTypes.SEPARATOR;
+          case 4: 
+            { yybegin(YYINITIAL); return IJVMTypes.VALUE;
             } 
             // fall through
           case 15: break;
-          case 6: 
-            { yybegin(SEPARATOR_VALUE); return IJVMTypes.VALUE;
+          case 5: 
+            { yybegin(SEPARATOR); return IJVMTypes.LETTER;
             } 
             // fall through
           case 16: break;
-          case 7: 
+          case 6: 
             { yybegin(YYINITIAL); return IJVMTypes.COMMENT;
             } 
             // fall through
           case 17: break;
-          case 8: 
+          case 7: 
             { yybegin(YYINITIAL); return IJVMTypes.KEY;
             } 
             // fall through
           case 18: break;
-          case 9: 
-            { yybegin(SPACE_VALUE); return IJVMTypes.KEY;
+          case 8: 
+            { yybegin(INTEGER_VALUE); return IJVMTypes.SEPARATOR;
             } 
             // fall through
           case 19: break;
-          case 10: 
+          case 9: 
             { yybegin(INTEGER_VALUE); return IJVMTypes.KEY;
             } 
             // fall through
           case 20: break;
+          case 10: 
+            { yybegin(LETTER_ONLY_VALUE); return IJVMTypes.KEY;
+            } 
+            // fall through
+          case 21: break;
+          case 11: 
+            { yybegin(LETTER_VALUE); return IJVMTypes.KEY;
+            } 
+            // fall through
+          case 22: break;
           default:
             zzScanError(ZZ_NO_MATCH);
           }

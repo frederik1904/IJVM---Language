@@ -13,19 +13,8 @@
     tokenTypeClass="com.IJVMplugin.psi.IJVMTokenType"
 }
 
-IJVMFile ::= item_*
-
-Instruction ::= (Idenfifier ';'| Idenfifier ';' SimpleInstr | SimpleInstr)
-
-SimpleInstr ::= ( "ILOAD" Idenfifier
-                | "ISTORE" Idenfifier
-                | "IADD"
-                | "ISUB"
-                | "IAND"
-                | "IOR"
-                | )
+IJVMFILE ::= item_*
 
 private item_ ::= (property|COMMENT|CRLF)
 
-property ::= (KEY? SEPARATOR VALUE?) | KEY
-
+property ::= (KEY VALUE) | KEY | (KEY LETTER SEPARATOR VALUE)

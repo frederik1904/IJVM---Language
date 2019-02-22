@@ -2,6 +2,7 @@ package com.IJVMplugin;
 
 import com.IJVM.IJVMLanguage;
 import com.IJVMplugin.parser.IJVMParser;
+import com.IJVMplugin.psi.IJVMFile;
 import com.IJVMplugin.psi.IJVMTypes;
 import com.intellij.lang.ASTNode;
 import com.intellij.lang.ParserDefinition;

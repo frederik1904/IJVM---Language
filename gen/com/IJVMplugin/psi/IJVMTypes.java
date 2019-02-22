@@ -15,6 +15,7 @@ public interface IJVMTypes {
   IElementType COMMENT = new IJVMTokenType("COMMENT");
   IElementType CRLF = new IJVMTokenType("CRLF");
   IElementType KEY = new IJVMTokenType("KEY");
+  IElementType LETTER = new IJVMTokenType("LETTER");
   IElementType SEPARATOR = new IJVMTokenType("SEPARATOR");
   IElementType VALUE = new IJVMTokenType("VALUE");
 

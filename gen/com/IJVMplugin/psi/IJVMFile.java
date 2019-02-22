@@ -1,4 +1,4 @@
-package com.IJVMplugin;
+package com.IJVMplugin.psi;
 
 import com.IJVM.IJVMFileType;
 import com.IJVM.IJVMLanguage;
@@ -22,7 +22,7 @@ public class IJVMFile extends PsiFileBase {
 
     @Override
     public String toString() {
-        return "IJVM file";
+        return "IJVM File";
     }
 
     @Override
