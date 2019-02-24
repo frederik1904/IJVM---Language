@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 public class IJVMCompletionContributor extends CompletionContributor {
     public IJVMCompletionContributor() {
         extend(CompletionType.BASIC,
-                PlatformPatterns.psiElement(IJVMTypes.KEY).withLanguage(IJVMLanguage.INSTANCE),
+                PlatformPatterns.psiElement(IJVMTypes.CRLF).withLanguage(IJVMLanguage.INSTANCE),
                 new CompletionProvider<CompletionParameters>() {
                     public void addCompletions(@NotNull CompletionParameters parameters,
                                                ProcessingContext context,
